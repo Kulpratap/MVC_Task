@@ -8,7 +8,7 @@ class Logout extends Controller
     // Initialize Google Client
     $client = new Google_Client();
     $client->setClientId(YOUR_CLIENT_ID);
-    $client->setClientSecret(YOUR_CLIENT_SECRET);
+    $client->setClientSecret("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");
     // Clear access token from Google session
     $client->revokeToken($_SESSION['google_access_token']);
 
