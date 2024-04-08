@@ -1,10 +1,10 @@
 <?php
-// $model = new Model;
-// $model->test('Post');
 namespace app\controller;
+
 use app\core\Controller;
 use app\models\Post;
 use app\core\Config;
+
 class CreatePost extends Controller
 {
   use Post;

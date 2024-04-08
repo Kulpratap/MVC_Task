@@ -1,7 +1,4 @@
 <?php
-// $model = new Model;
-// $model->test('User');
-// $model->test('Profiledb');
 namespace app\controller;
 use app\core\Controller;
 use app\models\Profiledb;
@@ -30,7 +27,7 @@ class Update extends Controller
       $user_name = $_SESSION['username'];
       $isvalid = $this->emailValidate($email);
       if ($isvalid == true) {
-        $x = $this->checkAndUpdateEmail($email, $user_name);
+        $valid_Email = $this->checkAndUpdateEmail($email, $user_name);
       } else {
         echo "<script>alert('Email is not valid'); window.location.href='update'; </script>";
       }
@@ -39,15 +36,15 @@ class Update extends Controller
         echo "<script>alert('Username cannot be empty'); window.location.href='update'; </script>";
       } else {
         $user_name = $_SESSION['username'];
-        $y = $this->checkAndUpdateUsername($new_user_name, $user_name);
+        $valid_User = $this->checkAndUpdateUsername($new_user_name, $user_name);
       }
 
-      if ($x == true && $y == true) {
+      if ($valid_Email == true && $valid_User == true) {
         $this->UpdateProfile($bio, $folder);
-      } else if ($x == true && $y == false) {
-        echo "<script>alert('$y'); window.location.href='profile';</script>";
-      } else if ($x == false && $y == true) {
-        echo "<script>alert('$x'); window.location.href='profile';</script>";
+      } else if ($valid_Email == true && $valid_User == false) {
+        echo "<script>alert('$valid_User'); window.location.href='profile';</script>";
+      } else if ($valid_Email == false && $valid_User == true) {
+        echo "<script>alert('$valid_Email'); window.location.href='profile';</script>";
       }
     }
     if ($_SESSION['loggedin'] == true) {

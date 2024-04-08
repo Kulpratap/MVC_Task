@@ -1,7 +1,4 @@
 <?php
-// $model = new Model;
-// $model->test('User');
-// $model->test('Post');
 namespace app\controller;
 use app\core\Controller;
 use app\models\Post;
