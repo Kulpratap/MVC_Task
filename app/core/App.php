@@ -1,10 +1,5 @@
 <?php
-
-// App class here
-
-/**
- * Class Router handles routing logic.
- */
+namespace app\core;
 class App
 {
     /** @var string $url The URL to be processed. */
@@ -44,6 +39,7 @@ class App
      */
     public function loadPage()
     {
+      
         // Split the URL into segments.
         $URL = $this->splitURL();
 
@@ -56,11 +52,11 @@ class App
         // If the controller file exists, require it.
         if (file_exists($filename)) {
             require ($filename);
-            $this->controller = $controller;
+            $this->controller = '\app\\controller\\'.$controller;
         } else {
             // If the controller file does not exist, require the 404 controller.
             require ("../app/controller/_404.php");
-            $this->controller = "_404";
+            $this->controller = "\app\\controller\\"."_404";
         }
         $con = new $this->controller();
         call_user_func_array([$con, $this->method], []);
@@ -69,5 +65,3 @@ class App
 
 // Instantiate the Router class and load the appropriate controller.
 
-$router = new App();
-$router->loadPage();

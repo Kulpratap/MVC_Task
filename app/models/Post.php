@@ -1,4 +1,6 @@
 <?php
+namespace app\models;
+use app\core\Database;
 trait Post
 {
   use Database;
@@ -14,16 +16,35 @@ trait Post
       if ($query) {
         // Commit transaction
         $this->conn->commit();
-        echo "<script>alert('Post Created Succesfully'); window.location.href='home';</script>";
+        header('Location:home');
       } else {
         // Rollback transaction
         $this->conn->rollback();
         echo $this->conn->error;
       }
-    } catch (mysqli_sql_exception $e) {
+    } catch (\mysqli_sql_exception $e) {
       $this->conn->rollback();
       echo $e->getMessage();
     }
+  }
+  public function readPost($postId){
+    $sql = "SELECT image_path,content FROM posts where post_id=$postId";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $posts = $result->fetch_assoc();
+    $stmt->close();
+    return $posts;
+  }
+  public function UpdatePost($content,$postId){
+    $sql = "UPDATE  posts SET content='$content' where post_id=$postId" ;
+    
+      $query = $this->conn->query($sql);
+      // Check if all queries were successful
+      if ($query) {
+        // Commit transaction
+        header('Location:/public/profile');
+      } 
   }
   public function displayPosts($posts)
   {

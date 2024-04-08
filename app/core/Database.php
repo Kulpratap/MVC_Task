@@ -1,5 +1,5 @@
 <?php
-
+namespace app\core;
 trait Database
 {
   /** @var string */
@@ -10,7 +10,7 @@ trait Database
   private $password;
   /** @var string */
   private $dbname;
-  /** @var mysqli */
+  /** @var \mysqli */
   private $conn;
 
   /**
@@ -33,7 +33,7 @@ trait Database
     $this->dbname = $dbname;
 
     // Create connection
-    $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+    $this->conn = new \mysqli($this->servername, $this->username, $this->password, $this->dbname);
 
     // Check connection
     if ($this->conn->connect_error) {

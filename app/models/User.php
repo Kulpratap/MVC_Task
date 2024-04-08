@@ -1,7 +1,10 @@
 <?php
+namespace app\models;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-trait USER{
+use app\core\Database;
+use app\core\Config;
+trait User{
   use Database;
   /**
    * @var string $mail
@@ -79,7 +82,7 @@ trait USER{
         $this->conn->rollback();
         return "Error: " . $this->conn->error;
       }
-    } catch (mysqli_sql_exception $e) {
+    } catch (\mysqli_sql_exception $e) {
       $this->conn->rollback();
       if ($e->getMessage() == "Duplicate entry '$username' for key 'users.PRIMARY'") {
         return "Already Registered with this username";
@@ -101,7 +104,7 @@ trait USER{
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       echo "<p>Invalid email format!</p>";
     } else {
-      $api_key = "a5cf0b85891146e7967d0930ea15ffd9";
+      $api_key = "0c7f6fd69a8b4143ae7f7c73b6656478";
       $ch = curl_init();
       curl_setopt_array($ch, [
         CURLOPT_URL => "https://emailvalidation.abstractapi.com/v1/?api_key=$api_key&email=$email",
@@ -125,6 +128,7 @@ trait USER{
   }
   public function forgotPassword()
   {
+    new Config();
     // Get email from POST data.
     $this->mail = $_POST['mail'];
 
@@ -136,7 +140,7 @@ trait USER{
      
     } else {
       // Check if the email exists in the database.
-      $conn = new mysqli(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);
+      $conn = new \mysqli(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);
 
       // Check connection.
       if ($conn->connect_error) {
@@ -168,8 +172,9 @@ trait USER{
    */
   public function sendResetLink()
   {
+    new Config();
     // Store the token and its expiration time in the database.
-    $conn = new mysqli(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);
+    $conn = new \mysqli(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);
 
     // Check connection.
     if ($conn->connect_error) {
@@ -286,7 +291,7 @@ trait USER{
 
     // Execute the update statement
     if ($stmt->execute()) {
-      echo "<script>alert('Password Updated Sucessfully');  window.location.href ='login';</script>";
+      header('Location:login');
     } else {
       echo "Error updating password: " . $this->conn->error;
     }
@@ -325,7 +330,7 @@ trait USER{
   {
     require '../vendor/autoload.php';
   
-      $client = new Google_Client();
+      $client = new \Google_Client();
       $client->setClientId(YOUR_CLIENT_ID);
       $client->setClientSecret("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");
       $client->setRedirectUri(YOUR_REDIRECT_URI);
@@ -339,7 +344,7 @@ trait USER{
           $client->setAccessToken($token['access_token']);
           $_SESSION['google_access_token'] = $token;
           // Get user information
-          $oauth2 = new Google_Service_Oauth2($client);
+          $oauth2 = new \Google_Service_Oauth2($client);
           $userInfo = $oauth2->userinfo->get();
           
           // Check if user exists in the database
@@ -455,12 +460,12 @@ public function checkAndUpdateEmail($email,$user_name)
   $UserName = mysqli_real_escape_string($this->conn, $user_name);
 
   // Check if the same user is registered with this email
-  $sql = "SELECT UserName FROM users WHERE email = '$email' AND UserName = '$user_name'";
+  $sql = "SELECT UserName FROM users WHERE email = '$email' AND UserName = '$UserName'";
   $result = $this->conn->query($sql);
 
   if ($result->num_rows > 0) {
       // Same user is registered with this email, update the email
-      $sql = "UPDATE users SET email = '$email' WHERE UserName = '$user_name'";
+      $sql = "UPDATE users SET email = '$email' WHERE UserName = '$UserName'";
       if ($this->conn->query($sql) === TRUE) {
         return true;
       } else {
@@ -468,14 +473,14 @@ public function checkAndUpdateEmail($email,$user_name)
       }
   } else {
       // Check if email is associated with any other user
-      $sql = "SELECT UserName FROM users WHERE email = '$email' AND UserName != '$user_name'";
+      $sql = "SELECT UserName FROM users WHERE email = '$email' AND UserName != '$UserName'";
       $result = $this->conn->query($sql);
 
       if ($result->num_rows > 0) {
-          return true;
+          echo "<script>alert('Email Already Registered'); window.location.href='update';</script>";
       } else {
           // Update the email for the user
-          $sql = "UPDATE users SET email = '$email' WHERE UserName = '$user_name'";
+          $sql = "UPDATE users SET email = '$email' WHERE UserName = '$UserName'";
           if ($this->conn->query($sql) === TRUE) {
              return true;
           } else {
@@ -509,7 +514,7 @@ try{
       $result = $this->conn->query($sql);
 
       if ($result->num_rows > 0) {
-          return true;
+        echo "<script>alert('Username Already Registered'); window.location.href='update';</script>";
       } else {
           // Update the UserName for the user
           $sql = "UPDATE users SET UserName = '$new_user_name' WHERE UserName = '$user_name'";
@@ -522,7 +527,7 @@ try{
           }
       }
 }
-}catch (mysqli_sql_exception $e) {
+}catch (\mysqli_sql_exception $e) {
 $this->conn->rollback();
 echo $e->getMessage();
 }

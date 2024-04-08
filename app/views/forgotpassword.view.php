@@ -1,3 +1,7 @@
+<?php
+use app\core\Config;
+new Config();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

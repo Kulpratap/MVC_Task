@@ -1,5 +1,5 @@
 <?php 
-
+namespace app\core;
 class Controller{
   public function view($name){
     $filename="../app/views/".$name.".view.php";

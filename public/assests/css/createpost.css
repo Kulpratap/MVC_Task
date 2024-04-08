@@ -34,7 +34,10 @@ body, html {
   display: block;
   margin-bottom: 5px;
 }
-
+.image-show{
+  width: 100%;
+  height: 100%;
+}
 .form-group input[type="file"],input[type="text"],
 .form-group textarea {
   width: 95%;

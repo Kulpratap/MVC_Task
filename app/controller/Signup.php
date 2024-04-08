@@ -1,12 +1,16 @@
 <?php
-$model = new Model;
-$model->test('User');
+// $model = new Model;
+// $model->test('User');
+namespace app\controller;
+use app\core\Controller;
+use app\models\User;
+use app\core\Config;
 class Signup extends Controller
 {
   use User;
   public function check()
   {
-    if (isset ($_POST['register'])) {
+    if (isset($_POST['register'])) {
       $this->connection(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);
       // Get form data
       $username = $_POST["username"];
@@ -21,23 +25,23 @@ class Signup extends Controller
       }
       $email = $_POST['mail'];
       if ($this->emailValidate($email) == true) {
-       $result = $this->insertUserData($username, $email, $password_hashed);
+        $result = $this->insertUserData($username, $email, $password_hashed);
       } else {
         "<script>alert('Email not valid');  window.location.href ='signup';</script>";
       }
       // Output the result
-      if($result=='Registered Sucessfully'){
-        echo "<script>alert('Registered Sucessfully');  window.location.href ='login';</script>";
-      }else{
+      if ($result == 'Registered Sucessfully') {
+        header('Location:login');
+      } else {
         echo "<script>alert('$result');  window.location.href ='signup';</script>";
       }
-      
+
       // Close the database connection
       $this->closeConnection();
     }
-    if($_SESSION['loggedin']==false){
-    $this->view('signup');
-    }else{
+    if ($_SESSION['loggedin'] == false) {
+      $this->view('signup');
+    } else {
       header("Location:home");
     }
   }

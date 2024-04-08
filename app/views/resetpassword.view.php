@@ -1,4 +1,6 @@
 <?php
+use app\core\Config;
+new Config();
 if (isset($_GET['token'])) {
   $_SESSION['token'] = $_GET['token'];
 }
@@ -19,8 +21,8 @@ if (isset($_GET['token'])) {
   $stmt->execute();
   $result = $stmt->get_result();
   // Check if any rows were returned.
-  $x=($result->fetch_assoc());
-  if ($x["token"]!=$_SESSION['token'] || $_SESSION['token']==null) {
+  $row=($result->fetch_assoc());
+  if ($row["token"]!=$_SESSION['token'] || $_SESSION['token']==null) {
     echo "<h1>Link expires</h1>";
   } else{ ?>
     <!DOCTYPE html>

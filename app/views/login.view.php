@@ -1,4 +1,6 @@
 <?php
+use app\core\Config;
+new Config();
 $_SESSION['loggedin']=false;
 ?>
 <head>
@@ -28,7 +30,6 @@ $_SESSION['loggedin']=false;
       </div>
     </form>
   </div>
-    <!-- <script src="../Javascript/script.js"></script> -->
 </body>
 </head>
 </html>

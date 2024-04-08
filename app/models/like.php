@@ -23,7 +23,6 @@ class LikeUpdate
         }
         
         if ($this->conn->query($query) && $this->conn->query($query1)) {
-          
             // Get the updated like count for the post
             $likeCountQuery = "SELECT COUNT(*) AS like_count FROM likes WHERE post_id = $postId";
             $result = $this->conn->query($likeCountQuery);

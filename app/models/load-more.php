@@ -1,10 +1,10 @@
 <?php
 
 class PostLoader
-{   
+{
     private $conn;
-    public function loadMorePosts($offset) {
-        // Prepare the SQL statement to fetch posts with offset and limit
+    public function loadMorePosts($offset)
+    {
         $this->conn = new mysqli("localhost", "kul", "Kul@123456", "USER");
         $sql = "SELECT P.post_id, P.user_name, P.content, P.image_path,P.like_count,  U.profile_img AS profile_img FROM posts P JOIN  users U ON P.user_name = U.UserName ORDER BY P.created_at DESC LIMIT ?, 10";
 
@@ -13,10 +13,9 @@ class PostLoader
         // Bind parameters
         $stmt->bind_param("i", $offset);
         $stmt->execute();
-        $result = $stmt->get_result(); 
+        $result = $stmt->get_result();
         $posts = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
-
         return json_encode($posts);
     }
 }

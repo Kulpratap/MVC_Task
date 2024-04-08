@@ -1,12 +1,17 @@
 <?php
+namespace app\controller;
+use app\core\Controller;
+use app\core\Config;
 class Logout extends Controller
 {
+ 
   public function check()
   {
     require '../vendor/autoload.php';
+    new Config();
 
     // Initialize Google Client
-    $client = new Google_Client();
+    $client = new \Google_Client();
     $client->setClientId(YOUR_CLIENT_ID);
     $client->setClientSecret("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");
     // Clear access token from Google session

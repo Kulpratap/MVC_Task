@@ -1,12 +1,18 @@
 <?php
-$model = new Model;
-$model->test('Profiledb');
-$model->test('User');
+// $model = new Model;
+// $model->test('User');
+// $model->test('Profiledb');
+namespace app\controller;
+use app\core\Controller;
+use app\models\Profiledb;
+use app\models\User;
+use app\core\Config;
 class Update extends Controller
 {
   use User,Profiledb;
   public function check()
   {
+    new Config();
     if (isset($_POST['submit'])) {
       $bio = $_POST['description'];
       $email = trim($_POST['email']);

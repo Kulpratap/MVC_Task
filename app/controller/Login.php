@@ -1,14 +1,17 @@
 <?php
-$model = new Model;
-$model->test('User');
+// $model = new Model;
+// $model->test('User');
+namespace app\controller;
+use app\core\Controller;
+use app\models\User;
 class Login extends Controller
 {
- use User;
+  use User;
   public function check()
   {
-    if (isset ($_POST['login'])) {
+    if (isset($_POST['login'])) {
       // Create an instance of the Database class
-      $this->connection(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);
+      $this->connection('localhost', 'kul', 'Kul@123456', 'USER');
       // Get form data
       $username = $_POST["username"];
       $password = $_POST["password"];
@@ -16,9 +19,9 @@ class Login extends Controller
       // Close the database connection
       $this->closeConnection();
     }
-    if(!(isset($_SESSION['loggedin']) )|| ($_SESSION['loggedin'] == false)){
-      $this->view('login');
-    }else{
+    if (!(isset($_SESSION['loggedin'])) || ($_SESSION['loggedin'] == false)) {
+      return $this->view('login');
+    } else {
       header("Location:/public/home");
     }
   }

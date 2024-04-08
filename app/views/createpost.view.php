@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +21,7 @@
                 <div class="form-group">
                     <label for="description">Add Caption:</label>
                     <textarea id="description" name="description"
-                        placeholder="Enter your Bio for image here..." required></textarea>
+                        placeholder="Enter your Bio for image here..." ></textarea>
                 </div>
                 <input class="create_button" name="submit" type="submit" value="Create Post" ></button>
             </form>

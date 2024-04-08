@@ -1,4 +1,5 @@
 <?php 
+use app\controller\Update;
 $x=new Update();
 $x->connection(SERVER_NAME, USER_NAME, PASSWORD, DB_NAME);
 $profile=$x->getUserByUsername($_SESSION['username']);
@@ -22,6 +23,7 @@ $profile=$x->getUserByUsername($_SESSION['username']);
                     <label for="image">Select Profile Image</label>
                     <input type="file" name="filetoupload">
                 </div>
+                
                 <div class="form-group">
                     <label for="description">Edit Bio:</label>
                     <textarea id="description" name="description"

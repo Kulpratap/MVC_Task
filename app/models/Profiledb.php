@@ -1,4 +1,6 @@
 <?php
+namespace app\models;
+use app\core\Database;
 trait Profiledb{
   use Database;
   public function UpdateProfile($Bio, $image_path) {
@@ -22,13 +24,13 @@ trait Profiledb{
       if ($query) {
         // Commit transaction
         $this->conn->commit();
-        echo "<script>alert('Profile Updated Succesfully'); window.location.href='profile';</script>";
+        header('Location:profile');
       } else {
         // Rollback transaction
         $this->conn->rollback();
         echo $this->conn->error;
       }
-    } catch (mysqli_sql_exception $e) {
+    } catch (\mysqli_sql_exception $e) {
       $this->conn->rollback();
       echo $e->getMessage();
     }
