@@ -1,6 +1,6 @@
 <?php
 namespace app\core;
-class App
+class Routing
 {
     /** @var string $url The URL to be processed. */
     private $url;

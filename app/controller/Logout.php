@@ -10,7 +10,6 @@ class Logout extends Controller
     require '../vendor/autoload.php';
     new Config();
 
-    // Initialize Google Client
     $client = new \Google_Client();
     $client->setClientId(YOUR_CLIENT_ID);
     $client->setClientSecret("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");
